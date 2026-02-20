@@ -13,7 +13,7 @@ public class Book extends Item implements Borrowable {
     private String writer;
     private String publisher;
     private String ISBN; //X00000
-    private boolean isAvailable;
+    private boolean borrowed;
 
     public Book(String theTitle, double thePrice, String writer,
             String publisher, String isbn) {
@@ -117,20 +117,20 @@ public class Book extends Item implements Borrowable {
     @Override
     public void borrow() {
         if (isAvailable()) {
-            this.isAvailable = false;
+            this.borrowed = true;
         }
     }
 
     @Override
     public void giveBack() {
-        if (isGotIt() && !this.isAvailable) {
-            this.isAvailable = true;
+        if (this.borrowed) {
+            this.borrowed = false;
         }
     }
 
     @Override
     public boolean isAvailable() {
-        return this.isAvailable;
+        return isGotIt() && !this.borrowed;
     }
 
 }

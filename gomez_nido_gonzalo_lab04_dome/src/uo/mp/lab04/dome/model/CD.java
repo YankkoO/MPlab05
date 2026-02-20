@@ -12,7 +12,7 @@ public class CD extends Item implements Borrowable {
     private String artist;
     private int numberOfTracks;
     private int playingTime;
-    private boolean isAvailable;
+    private boolean borrowed;
 
     /**
      * Creates a new CD with default values for gotIt and comment
@@ -177,20 +177,20 @@ public class CD extends Item implements Borrowable {
     @Override
     public void borrow() {
         if (isAvailable()) {
-            this.isAvailable = false;
+            this.borrowed = true;
         }
     }
 
     @Override
     public void giveBack() {
-        if (isGotIt() && !this.isAvailable) {
-            this.isAvailable = true;
+        if (this.borrowed) {
+            this.borrowed = false;
         }
     }
 
     @Override
     public boolean isAvailable() {
-        return this.isAvailable;
+        return isGotIt() && !this.borrowed;
     }
 
 }

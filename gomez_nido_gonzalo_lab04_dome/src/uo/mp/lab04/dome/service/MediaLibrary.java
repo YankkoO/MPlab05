@@ -4,6 +4,7 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import uo.mp.lab04.dome.model.Borrowable;
 import uo.mp.lab04.dome.model.CD;
 import uo.mp.lab04.dome.model.DVD;
 import uo.mp.lab04.dome.model.Item;
@@ -158,6 +159,65 @@ public class MediaLibrary {
             }
         }
         return builder.toString();
+    }
+
+    /**
+     * Returns a list with all borrowable items
+     * 
+     * @return List of borrowable items
+     */
+    public List<Borrowable> getBorrowables() {
+        List<Borrowable> borrowables = new ArrayList<>();
+
+        for (Item i : items) {
+            if (i instanceof Borrowable) {
+                borrowables.add((Borrowable) i);
+            }
+        }
+        return borrowables;
+    }
+
+    /**
+     * Returns a list with all available items.
+     */
+    public List<Borrowable> getAvailables() {
+        List<Borrowable> availables = new ArrayList<>();
+        for (Borrowable b : getBorrowables()) {
+            if (b.isAvailable()) {
+                availables.add(b);
+            }
+        }
+        return availables;
+    }
+
+    /**
+     * 
+     */
+    public boolean borrow(Borrowable item) {
+        ArgumentChecks.isNotNull(item, "Item can't be null");
+
+        for (Borrowable b : getAvailables()) {
+            if (b.equals(item)) {
+                b.borrow();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 
+     */
+    public boolean giveBack(Borrowable item) {
+        ArgumentChecks.isNotNull(item, "Item can't be null");
+
+        for (Borrowable b : getBorrowables()) {
+            if (b.equals(item)) {
+                b.giveBack();
+                return true;
+            }
+        }
+        return false;
     }
 
 }

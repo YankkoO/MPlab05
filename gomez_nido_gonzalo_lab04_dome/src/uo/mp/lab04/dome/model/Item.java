@@ -170,15 +170,4 @@ public abstract class Item {
         return subTitle + position;
     }
 
-    /**
-     * Checks if a borrowable item passed as a parameter is available for
-     * borrowing or not
-     * 
-     * @param  item Item to check if its available
-     * 
-     * @return      True is owned and available; false otherwise
-     */
-    public boolean isAvailable(Borrowable item) {
-        return item.isAvailable() && isGotIt();
-    }
 }
